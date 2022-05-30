@@ -9,3 +9,10 @@ Explicitly declare and isolate dependencies
 - It declares all dependencies, completely and exactly, via a dependency declaration manifest. (package.json, Gemfile, pip)
 - Furthermore, it uses a dependency isolation tool during execution to ensure that no implicit dependencies (system-wide) “leak in” from the surrounding system.
 - Twelve-factor apps also do not rely on the implicit existence of any system tools. Examples include shelling out to ImageMagick or curl. While these tools may exist on many or even most systems, there is no guarantee that they will exist on all systems where the app may run in the future, or whether the version found on a future system will be compatible with the app. If the app needs to shell out to a system tool, that tool should be vendored into the app.
+
+# III. Config
+An app’s config is everything that is likely to vary between deploys (staging, production, developer environments, etc).
+
+Apps sometimes store config as constants in the code. This is a violation of twelve-factor, which requires **strict separation of config from code**. Config varies substantially across deploys, code does not.
+
+**The twelve-factor app stores config in environment variables (often shortened to env vars or env).**
