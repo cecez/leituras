@@ -16,3 +16,16 @@ An app’s config is everything that is likely to vary between deploys (staging,
 Apps sometimes store config as constants in the code. This is a violation of twelve-factor, which requires **strict separation of config from code**. Config varies substantially across deploys, code does not.
 
 **The twelve-factor app stores config in environment variables (often shortened to env vars or env).**
+
+# IV. Backing services
+
+A backing service is any service the app consumes over the network as part of its normal operation.
+
+**The code for a twelve-factor app makes no distinction between local and third party services.**
+- To the app, both are attached resources, accessed via a URL or other locator/credentials stored in the config. 
+- A deploy of the twelve-factor app should be able to swap out a local MySQL database with one managed by a third party (such as Amazon RDS) without any changes to the app’s code.
+
+Each distinct backing service is a resource.
+
+Resources can be attached to and detached from deploys at will.
+- For example, if the app’s database is misbehaving due to a hardware issue, the app’s administrator might spin up a new database server restored from a recent backup. The current production database could be detached, and the new database attached – all without any code changes (only the resource handle in the config needs to change).
